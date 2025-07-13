@@ -1,0 +1,189 @@
+{
+ "actions": [],
+ "allow_rename": 1,
+ "autoname": "naming_series:",
+ "creation": "2025-07-13 14:25:48.096382",
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "field_order": [
+  "basic_info_section",
+  "naming_series",
+  "enterprise_name",
+  "enterprise_code",
+  "company",
+  "column_break_ojbx",
+  "enterprise_type",
+  "parent_enterprise",
+  "tax_id",
+  "is_active",
+  "is_group",
+  "is_separate_entity",
+  "section_break_chbh",
+  "contact",
+  "address",
+  "column_break_jfvh",
+  "contact_number",
+  "address_display"
+ ],
+ "fields": [
+  {
+   "fieldname": "naming_series",
+   "fieldtype": "Select",
+   "label": "Naming Series",
+   "options": "ENT-.#####"
+  },
+  {
+   "allow_in_quick_entry": 1,
+   "fieldname": "enterprise_name",
+   "fieldtype": "Data",
+   "in_filter": 1,
+   "in_global_search": 1,
+   "in_list_view": 1,
+   "in_standard_filter": 1,
+   "label": "Enterprise Name",
+   "reqd": 1
+  },
+  {
+   "allow_in_quick_entry": 1,
+   "fieldname": "enterprise_code",
+   "fieldtype": "Data",
+   "in_global_search": 1,
+   "label": "Enterprise Code",
+   "reqd": 1
+  },
+  {
+   "allow_in_quick_entry": 1,
+   "fieldname": "company",
+   "fieldtype": "Link",
+   "in_filter": 1,
+   "in_list_view": 1,
+   "in_standard_filter": 1,
+   "label": "Company",
+   "options": "Company",
+   "reqd": 1
+  },
+  {
+   "fieldname": "column_break_ojbx",
+   "fieldtype": "Column Break"
+  },
+  {
+   "allow_in_quick_entry": 1,
+   "fieldname": "enterprise_type",
+   "fieldtype": "Link",
+   "in_filter": 1,
+   "in_list_view": 1,
+   "in_standard_filter": 1,
+   "label": "Enterprise Type",
+   "options": "Enterprise Type",
+   "reqd": 1
+  },
+  {
+   "default": "0",
+   "fieldname": "is_group",
+   "fieldtype": "Check",
+   "in_filter": 1,
+   "in_list_view": 1,
+   "in_standard_filter": 1,
+   "label": "Is Group"
+  },
+  {
+   "fieldname": "parent_enterprise",
+   "fieldtype": "Link",
+   "in_filter": 1,
+   "in_standard_filter": 1,
+   "label": "Parent Enterprise",
+   "options": "Enterprise"
+  },
+  {
+   "default": "0",
+   "fieldname": "is_separate_entity",
+   "fieldtype": "Check",
+   "in_filter": 1,
+   "in_list_view": 1,
+   "in_standard_filter": 1,
+   "label": "Is Separate Entity"
+  },
+  {
+   "fieldname": "tax_id",
+   "fieldtype": "Data",
+   "label": "Tax Id"
+  },
+  {
+   "fieldname": "section_break_chbh",
+   "fieldtype": "Section Break",
+   "label": "Address & Contact"
+  },
+  {
+   "fieldname": "contact",
+   "fieldtype": "Link",
+   "label": "Contact",
+   "options": "Contact"
+  },
+  {
+   "fieldname": "address",
+   "fieldtype": "Link",
+   "label": "Address",
+   "options": "Address"
+  },
+  {
+   "fieldname": "column_break_jfvh",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fetch_from": "contact.mobile_no",
+   "fieldname": "contact_number",
+   "fieldtype": "Data",
+   "label": "Contact Number"
+  },
+  {
+   "fieldname": "address_display",
+   "fieldtype": "Small Text",
+   "label": "Address Display"
+  },
+  {
+   "default": "0",
+   "fieldname": "is_active",
+   "fieldtype": "Check",
+   "in_filter": 1,
+   "in_list_view": 1,
+   "in_standard_filter": 1,
+   "label": "Is Active"
+  },
+  {
+   "fieldname": "basic_info_section",
+   "fieldtype": "Section Break",
+   "label": "Basic Info"
+  }
+ ],
+ "grid_page_length": 50,
+ "index_web_pages_for_search": 1,
+ "links": [],
+ "modified": "2025-07-13 15:32:42.793056",
+ "modified_by": "Administrator",
+ "module": "TenantX",
+ "name": "Enterprise",
+ "naming_rule": "By \"Naming Series\" field",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  }
+ ],
+ "quick_entry": 1,
+ "row_format": "Dynamic",
+ "show_title_field_in_link": 1,
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": [],
+ "title_field": "enterprise_name",
+ "track_changes": 1
+}

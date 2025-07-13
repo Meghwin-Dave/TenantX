@@ -1,0 +1,164 @@
+{
+ "actions": [],
+ "allow_rename": 1,
+ "autoname": "naming_series:",
+ "creation": "2025-07-13 14:37:10.012725",
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "field_order": [
+  "basic_info_section",
+  "naming_series",
+  "sbu_name",
+  "sbu_code",
+  "column_break_kgsq",
+  "company",
+  "enterprise",
+  "factory",
+  "is_active",
+  "section_break_gaxf",
+  "sbu_head",
+  "business_segment",
+  "description",
+  "financials_section",
+  "cost_center"
+ ],
+ "fields": [
+  {
+   "fieldname": "naming_series",
+   "fieldtype": "Select",
+   "label": "Naming Series",
+   "options": "SBU-.#####"
+  },
+  {
+   "allow_in_quick_entry": 1,
+   "fieldname": "sbu_name",
+   "fieldtype": "Data",
+   "in_filter": 1,
+   "in_list_view": 1,
+   "in_standard_filter": 1,
+   "label": "SBU Name",
+   "reqd": 1
+  },
+  {
+   "allow_in_quick_entry": 1,
+   "fieldname": "sbu_code",
+   "fieldtype": "Data",
+   "in_filter": 1,
+   "in_global_search": 1,
+   "in_list_view": 1,
+   "in_standard_filter": 1,
+   "label": "SBU Code",
+   "reqd": 1
+  },
+  {
+   "fieldname": "column_break_kgsq",
+   "fieldtype": "Column Break"
+  },
+  {
+   "allow_in_quick_entry": 1,
+   "fieldname": "company",
+   "fieldtype": "Link",
+   "in_filter": 1,
+   "in_list_view": 1,
+   "in_standard_filter": 1,
+   "label": "Company",
+   "options": "Company",
+   "reqd": 1
+  },
+  {
+   "allow_in_quick_entry": 1,
+   "fieldname": "enterprise",
+   "fieldtype": "Link",
+   "in_filter": 1,
+   "in_list_view": 1,
+   "in_standard_filter": 1,
+   "label": "Enterprise",
+   "options": "Enterprise",
+   "reqd": 1
+  },
+  {
+   "fieldname": "section_break_gaxf",
+   "fieldtype": "Section Break",
+   "label": "Additional Info"
+  },
+  {
+   "fieldname": "sbu_head",
+   "fieldtype": "Link",
+   "label": "SBU Head",
+   "options": "Employee"
+  },
+  {
+   "fieldname": "business_segment",
+   "fieldtype": "Link",
+   "label": "Business Segment",
+   "options": "Business Segment"
+  },
+  {
+   "fetch_from": "business_segment.description",
+   "fieldname": "description",
+   "fieldtype": "Small Text",
+   "label": "Description"
+  },
+  {
+   "fieldname": "factory",
+   "fieldtype": "Link",
+   "label": "Factory",
+   "options": "Factory Business Unit"
+  },
+  {
+   "fieldname": "basic_info_section",
+   "fieldtype": "Section Break",
+   "label": "Basic Info"
+  },
+  {
+   "fieldname": "financials_section",
+   "fieldtype": "Section Break",
+   "label": "Financials"
+  },
+  {
+   "fieldname": "cost_center",
+   "fieldtype": "Link",
+   "label": "Cost Center",
+   "options": "Cost Center"
+  },
+  {
+   "default": "0",
+   "fieldname": "is_active",
+   "fieldtype": "Check",
+   "in_filter": 1,
+   "in_list_view": 1,
+   "in_standard_filter": 1,
+   "label": "Is Active"
+  }
+ ],
+ "grid_page_length": 50,
+ "index_web_pages_for_search": 1,
+ "links": [],
+ "modified": "2025-07-13 15:32:43.746771",
+ "modified_by": "Administrator",
+ "module": "TenantX",
+ "name": "Strategic Business Unit",
+ "naming_rule": "By \"Naming Series\" field",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  }
+ ],
+ "row_format": "Dynamic",
+ "show_title_field_in_link": 1,
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": [],
+ "title_field": "sbu_name",
+ "track_changes": 1
+}
