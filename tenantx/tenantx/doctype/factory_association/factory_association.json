@@ -1,0 +1,50 @@
+{
+ "actions": [],
+ "allow_rename": 1,
+ "creation": "2025-07-13 16:01:03.785702",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "factory",
+  "access_type",
+  "is_approved"
+ ],
+ "fields": [
+  {
+   "fieldname": "factory",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "label": "Factory",
+   "options": "Factory Business Unit"
+  },
+  {
+   "fieldname": "access_type",
+   "fieldtype": "Select",
+   "in_list_view": 1,
+   "label": "Association Type",
+   "options": "Primary\nSecondary\nBackup"
+  },
+  {
+   "default": "0",
+   "fieldname": "is_approved",
+   "fieldtype": "Check",
+   "in_list_view": 1,
+   "label": "Is Approved"
+  }
+ ],
+ "grid_page_length": 50,
+ "index_web_pages_for_search": 1,
+ "istable": 1,
+ "links": [],
+ "modified": "2025-07-13 16:01:47.910757",
+ "modified_by": "Administrator",
+ "module": "TenantX",
+ "name": "Factory Association",
+ "owner": "Administrator",
+ "permissions": [],
+ "row_format": "Dynamic",
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": []
+}
