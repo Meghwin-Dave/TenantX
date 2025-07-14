@@ -17,7 +17,6 @@ class StrategicBusinessUnit(Document):
 		self.validate_factory_association()
 		self.validate_sbu_head()
 		self.validate_cost_center()
-		self.validate_naming_series()
 	
 	def validate_sbu_code(self):
 		"""Validate SBU code format and uniqueness"""
@@ -105,12 +104,6 @@ class StrategicBusinessUnit(Document):
 			cost_center = frappe.get_doc("Cost Center", self.cost_center)
 			if cost_center.disabled:
 				frappe.throw(_("Cost Center '{0}' is disabled").format(self.cost_center))
-	
-	def validate_naming_series(self):
-		"""Validate naming series format"""
-		if self.naming_series:
-			if not self.naming_series.startswith("SBU-"):
-				frappe.throw(_("SBU naming series must start with 'SBU-'"))
 	
 	def on_update(self):
 		"""Actions after SBU is updated"""
