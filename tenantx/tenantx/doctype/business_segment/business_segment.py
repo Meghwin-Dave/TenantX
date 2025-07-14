@@ -57,18 +57,3 @@ class BusinessSegment(Document):
 		if sbu_count > 0:
 			frappe.throw(_("Cannot delete Business Segment '{0}' as it is used by {1} Strategic Business Unit(s)").format(
 				self.name, sbu_count))
-	
-	def on_update(self):
-		"""Actions after business segment is updated"""
-		self.update_sbu_references()
-	
-	def update_sbu_references(self):
-		"""Update SBU references if business segment name changes"""
-		if self.has_value_changed("segment_name"):
-			# Update SBU references to reflect the new name
-			sbus = frappe.get_all("Strategic Business Unit", 
-				filters={"business_segment": self.name}, 
-				fields=["name"])
-			
-			for sbu in sbus:
-				frappe.db.set_value("Strategic Business Unit", sbu.name, "business_segment", self.segment_name)

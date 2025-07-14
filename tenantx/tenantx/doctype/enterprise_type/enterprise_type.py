@@ -53,18 +53,3 @@ class EnterpriseType(Document):
 		if enterprise_count > 0:
 			frappe.throw(_("Cannot delete Enterprise Type '{0}' as it is used by {1} enterprise(s)").format(
 				self.name, enterprise_count))
-	
-	def on_update(self):
-		"""Actions after enterprise type is updated"""
-		self.update_enterprise_references()
-	
-	def update_enterprise_references(self):
-		"""Update enterprise references if enterprise type name changes"""
-		if self.has_value_changed("enterprise_type"):
-			# Update enterprise references to reflect the new name
-			enterprises = frappe.get_all("Enterprise", 
-				filters={"enterprise_type": self.name}, 
-				fields=["name"])
-			
-			for enterprise in enterprises:
-				frappe.db.set_value("Enterprise", enterprise.name, "enterprise_type", self.enterprise_type)
