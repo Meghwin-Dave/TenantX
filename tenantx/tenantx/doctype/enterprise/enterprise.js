@@ -18,6 +18,13 @@ frappe.ui.form.on("Enterprise", {
         }
     },
     refresh: function(frm) {
+        frm.set_query("parent_enterprise", function() {
+            return {
+                filters: {
+                    company: frm.doc.company
+                }
+            };
+        });
         if (frm.doc.address) {
             frappe.call({
                 method: "frappe.contacts.doctype.address.address.get_address_display",
@@ -32,5 +39,6 @@ frappe.ui.form.on("Enterprise", {
                 }
             });
         }
-    }
+    },
+    
 });
