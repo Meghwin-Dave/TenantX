@@ -15,6 +15,7 @@ class Enterprise(Document):
 		self.validate_hierarchy()
 		self.validate_company_association()
 		self.validate_contact_address()
+		self.create_cost_center_if_needed()
 	
 	def validate_enterprise_code(self):
 		"""Validate enterprise code format and uniqueness"""
@@ -140,3 +141,23 @@ class Enterprise(Document):
 		if liaison_count > 0:
 			frappe.throw(_("Cannot delete Enterprise '{0}' as it has {1} associated Liaison Office(s)").format(
 				self.name, liaison_count))
+
+	def create_cost_center_if_needed(self):
+		"""Create a Cost Center if is_cost_center is checked and not already set"""
+		if getattr(self, 'is_cost_center', 0) and self.company and not self.cost_center:
+			# Check if a cost center with this name and company already exists
+			existing = frappe.db.exists("Cost Center", {"cost_center_name": self.enterprise_name, "company": self.company})
+			if existing:
+				self.cost_center = existing
+			else:
+				# Get the root cost center for the company
+				parent_cost_center = frappe.db.get_value("Cost Center", {"company": self.company, "parent_cost_center": None}, "name")
+				cc = frappe.get_doc({
+					"doctype": "Cost Center",
+					"cost_center_name": self.enterprise_name,
+					"company": self.company,
+					"is_group": 0,
+					"parent_cost_center": parent_cost_center
+				})
+				cc.insert(ignore_permissions=True)
+				self.cost_center = cc.name

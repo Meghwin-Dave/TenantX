@@ -12,7 +12,6 @@ class LiaisonOffice(Document):
 		"""Validate liaison office data before saving"""
 		self.validate_office_code()
 		self.validate_enterprise_association()
-		self.validate_country()
 		self.validate_liaison_head()
 		self.validate_contact_address()
 	
@@ -46,24 +45,6 @@ class LiaisonOffice(Document):
 			enterprise = frappe.get_doc("Enterprise", self.enterprise)
 			if not enterprise.is_active:
 				frappe.throw(_("Enterprise '{0}' is not active").format(self.enterprise))
-		
-			# Check for duplicate liaison offices in the same country for the same enterprise
-			if self.country:
-				existing_office = frappe.db.exists("Liaison Office", {
-					"enterprise": self.enterprise,
-					"country": self.country,
-					"name": ["!=", self.name]
-				})
-				if existing_office:
-					frappe.throw(_("Liaison Office already exists for Enterprise '{0}' in Country '{1}'").format(
-						self.enterprise, self.country))
-	
-	def validate_country(self):
-		"""Validate country association"""
-		if self.country:
-			# Check if country exists
-			if not frappe.db.exists("Country", self.country):
-				frappe.throw(_("Country '{0}' does not exist").format(self.country))
 			
 	
 	def validate_liaison_head(self):

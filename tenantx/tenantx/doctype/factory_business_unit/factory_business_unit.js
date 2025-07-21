@@ -27,6 +27,15 @@ frappe.ui.form.on("Factory Business Unit", {
         }
     },
     refresh: function(frm) {
+        if (!frm.is_new()) {
+            frm.add_custom_button(__('Create Supplier'), function() {
+                frappe.new_doc('Supplier', {
+                    custom_factory_business_unit: frm.doc.name,
+                    company: frm.doc.company,
+                    custom_enterprise: frm.doc.enterprise
+                });
+            }, __('Create'));
+        }
         frm.set_query("parent_enterprise", function() {
             return {
                 filters: {
@@ -87,7 +96,7 @@ frappe.ui.form.on("Factory Business Unit", {
             };
         });
 
-        frm.set_query("warehouse", function() {
+        frm.set_query("warehouse", "warehouse_details", function(doc, cdt, cdn) {
             return {
                 filters: {
                     company: frm.doc.company

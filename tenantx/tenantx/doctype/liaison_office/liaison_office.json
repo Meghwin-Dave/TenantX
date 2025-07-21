@@ -11,6 +11,8 @@
   "office_name",
   "office_code",
   "enterprise",
+  "sbu",
+  "factory",
   "column_break_hbso",
   "country",
   "liaison_head",
@@ -53,8 +55,7 @@
    "in_list_view": 1,
    "in_standard_filter": 1,
    "label": "Enterprise",
-   "options": "Enterprise",
-   "reqd": 1
+   "options": "Enterprise"
   },
   {
    "fieldname": "column_break_hbso",
@@ -117,12 +118,30 @@
    "fieldname": "address_display",
    "fieldtype": "Small Text",
    "label": "Address Display"
+  },
+  {
+   "fieldname": "sbu",
+   "fieldtype": "Link",
+   "in_filter": 1,
+   "in_list_view": 1,
+   "in_standard_filter": 1,
+   "label": "SBU",
+   "options": "Strategic Business Unit"
+  },
+  {
+   "fieldname": "factory",
+   "fieldtype": "Link",
+   "in_filter": 1,
+   "in_list_view": 1,
+   "in_standard_filter": 1,
+   "label": "Factory",
+   "options": "Factory Business Unit"
   }
  ],
  "grid_page_length": 50,
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2025-07-13 15:32:42.486358",
+ "modified": "2025-07-20 18:31:21.355966",
  "modified_by": "Administrator",
  "module": "TenantX",
  "name": "Liaison Office",

@@ -14,12 +14,14 @@
   "company",
   "enterprise",
   "factory",
+  "parent_sbu",
   "is_active",
   "section_break_gaxf",
   "sbu_head",
   "business_segment",
   "description",
   "financials_section",
+  "is_cost_center",
   "cost_center"
  ],
  "fields": [
@@ -101,9 +103,9 @@
   },
   {
    "fieldname": "factory",
-   "fieldtype": "Link",
+   "fieldtype": "Table MultiSelect",
    "label": "Factory",
-   "options": "Factory Business Unit"
+   "options": "FBU List"
   },
   {
    "fieldname": "basic_info_section",
@@ -119,7 +121,8 @@
    "fieldname": "cost_center",
    "fieldtype": "Link",
    "label": "Cost Center",
-   "options": "Cost Center"
+   "options": "Cost Center",
+   "read_only": 1
   },
   {
    "default": "0",
@@ -129,12 +132,24 @@
    "in_list_view": 1,
    "in_standard_filter": 1,
    "label": "Is Active"
+  },
+  {
+   "fieldname": "parent_sbu",
+   "fieldtype": "Link",
+   "label": "Parent SBU",
+   "options": "Strategic Business Unit"
+  },
+  {
+   "default": "0",
+   "fieldname": "is_cost_center",
+   "fieldtype": "Check",
+   "label": "Is Cost Center"
   }
  ],
  "grid_page_length": 50,
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2025-07-13 15:32:43.746771",
+ "modified": "2025-07-21 23:33:07.164247",
  "modified_by": "Administrator",
  "module": "TenantX",
  "name": "Strategic Business Unit",

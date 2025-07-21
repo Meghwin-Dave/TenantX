@@ -20,7 +20,6 @@
   "capacity",
   "capacity_uom",
   "column_break_alqf",
-  "warehouse",
   "factory_head",
   "section_break_lumk",
   "contact",
@@ -28,7 +27,12 @@
   "column_break_esgv",
   "contact_number",
   "address_display",
+  "warehouses_section",
+  "warehouse_details",
+  "customers_section",
+  "customer_details",
   "section_break_gxmk",
+  "is_cost_center",
   "cost_center"
  ],
  "fields": [
@@ -126,12 +130,6 @@
    "fieldtype": "Column Break"
   },
   {
-   "fieldname": "warehouse",
-   "fieldtype": "Link",
-   "label": "Warehouse",
-   "options": "Warehouse"
-  },
-  {
    "fieldname": "factory_head",
    "fieldtype": "Link",
    "label": "Factory Head",
@@ -178,13 +176,42 @@
    "fieldname": "cost_center",
    "fieldtype": "Link",
    "label": "Cost Center",
-   "options": "Cost Center"
+   "options": "Cost Center",
+   "read_only": 1
+  },
+  {
+   "fieldname": "customers_section",
+   "fieldtype": "Section Break",
+   "label": "Customers"
+  },
+  {
+   "fieldname": "customer_details",
+   "fieldtype": "Table",
+   "label": "Customer Details",
+   "options": "Customer Details"
+  },
+  {
+   "fieldname": "warehouses_section",
+   "fieldtype": "Section Break",
+   "label": "Warehouses"
+  },
+  {
+   "fieldname": "warehouse_details",
+   "fieldtype": "Table",
+   "label": "Warehouse Details",
+   "options": "Warehouse Details"
+  },
+  {
+   "default": "0",
+   "fieldname": "is_cost_center",
+   "fieldtype": "Check",
+   "label": "Is Cost Center"
   }
  ],
  "grid_page_length": 50,
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2025-07-13 15:32:43.239271",
+ "modified": "2025-07-21 23:18:38.297418",
  "modified_by": "Administrator",
  "module": "TenantX",
  "name": "Factory Business Unit",

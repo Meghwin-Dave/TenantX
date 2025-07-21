@@ -46,5 +46,23 @@ frappe.ui.form.on("Strategic Business Unit", {
                 }
             };
         });
+    },
+    refresh: function(frm) {
+        if (!frm.is_new()) {
+            frm.add_custom_button(__('Create Child SBU'), function() {
+                frappe.new_doc('Strategic Business Unit', {
+                    parent_sbu: frm.doc.name,
+                    company: frm.doc.company,
+                    enterprise: frm.doc.enterprise
+                });
+            }, __('Create'));
+            frm.add_custom_button(__('Create Supplier'), function() {
+                frappe.new_doc('Supplier', {
+                    custom_strategic_business_unit: frm.doc.name,
+                    company: frm.doc.company,
+                    custom_enterprise: frm.doc.enterprise
+                });
+            }, __('Create'));
+        }
     }
 });

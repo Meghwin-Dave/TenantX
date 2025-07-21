@@ -16,10 +16,10 @@ class FactoryBusinessUnit(Document):
 		self.validate_sbu_association()
 		self.validate_factory_category()
 		self.validate_capacity()
-		self.validate_warehouse()
 		self.validate_factory_head()
 		self.validate_cost_center()
 		self.validate_contact_address()
+		self.create_cost_center_if_needed()
 	
 	def validate_factory_code(self):
 		"""Validate factory code format and uniqueness"""
@@ -100,18 +100,6 @@ class FactoryBusinessUnit(Document):
 			if not frappe.db.exists("UOM", self.capacity_uom):
 				frappe.throw(_("UOM '{0}' does not exist").format(self.capacity_uom))
 	
-	def validate_warehouse(self):
-		"""Validate warehouse association"""
-		if self.warehouse:
-			# Check if warehouse exists
-			if not frappe.db.exists("Warehouse", self.warehouse):
-				frappe.throw(_("Warehouse '{0}' does not exist").format(self.warehouse))
-			
-			# Check if warehouse is active
-			warehouse = frappe.get_doc("Warehouse", self.warehouse)
-			if warehouse.disabled:
-				frappe.throw(_("Warehouse '{0}' is disabled").format(self.warehouse))
-	
 	def validate_factory_head(self):
 		"""Validate factory head assignment"""
 		if self.factory_head:
@@ -188,3 +176,23 @@ class FactoryBusinessUnit(Document):
 		"""Set default values for new factory business unit"""
 		if not self.is_active:
 			self.is_active = 1
+
+	def create_cost_center_if_needed(self):
+		"""Create a Cost Center if is_cost_center is checked and not already set"""
+		if getattr(self, 'is_cost_center', 0) and self.company and not self.cost_center:
+			# Check if a cost center with this name and company already exists
+			existing = frappe.db.exists("Cost Center", {"cost_center_name": self.factory_name, "company": self.company})
+			if existing:
+				self.cost_center = existing
+			else:
+				# Get the root cost center for the company
+				parent_cost_center = frappe.db.get_value("Cost Center", {"company": self.company, "parent_cost_center": None}, "name")
+				cc = frappe.get_doc({
+					"doctype": "Cost Center",
+					"cost_center_name": self.factory_name,
+					"company": self.company,
+					"is_group": 0,
+					"parent_cost_center": parent_cost_center
+				})
+				cc.insert(ignore_permissions=True)
+				self.cost_center = cc.name

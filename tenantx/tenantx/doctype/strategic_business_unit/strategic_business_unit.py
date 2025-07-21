@@ -14,9 +14,10 @@ class StrategicBusinessUnit(Document):
 		self.validate_enterprise_association()
 		self.validate_company_association()
 		self.validate_business_segment()
-		self.validate_factory_association()
 		self.validate_sbu_head()
 		self.validate_cost_center()
+		self.validate_parent_sbu()
+		self.create_cost_center_if_needed()
 	
 	def validate_sbu_code(self):
 		"""Validate SBU code format and uniqueness"""
@@ -68,19 +69,6 @@ class StrategicBusinessUnit(Document):
 			if not frappe.db.exists("Business Segment", self.business_segment):
 				frappe.throw(_("Business Segment '{0}' does not exist").format(self.business_segment))
 	
-	def validate_factory_association(self):
-		"""Validate factory business unit association"""
-		if self.factory:
-			factory = frappe.get_doc("Factory Business Unit", self.factory)
-			
-			# Check if factory belongs to the same enterprise
-			if factory.enterprise != self.enterprise:
-				frappe.throw(_("Factory Business Unit must belong to the same enterprise"))
-			
-			# Check if factory is active
-			if not factory.is_active:
-				frappe.throw(_("Factory Business Unit '{0}' is not active").format(self.factory))
-	
 	def validate_sbu_head(self):
 		"""Validate SBU head assignment"""
 		if self.sbu_head:
@@ -105,45 +93,22 @@ class StrategicBusinessUnit(Document):
 			if cost_center.disabled:
 				frappe.throw(_("Cost Center '{0}' is disabled").format(self.cost_center))
 	
-	def on_update(self):
-		"""Actions after SBU is updated"""
-		self.update_factory_references()
-		self.update_related_documents()
-	
-	def update_factory_references(self):
-		"""Update factory references if SBU changes"""
-		if self.has_value_changed("name"):
-			# Update factory business units that reference this SBU
-			factories = frappe.get_all("Factory Business Unit", 
-				filters={"sbu": self.name}, 
-				fields=["name"])
-			
-			for factory in factories:
-				frappe.db.set_value("Factory Business Unit", factory.name, "sbu", self.name)
-	
-	def update_related_documents(self):
-		"""Update related documents when SBU changes"""
-		# Update factory business units if SBU is deactivated
-		if self.has_value_changed("is_active") and not self.is_active:
-			factories = frappe.get_all("Factory Business Unit", 
-				filters={"sbu": self.name, "is_active": 1}, 
-				fields=["name"])
-			
-			for factory in factories:
-				frappe.db.set_value("Factory Business Unit", factory.name, "is_active", 0)
-				frappe.msgprint(_("Factory Business Unit '{0}' has been deactivated").format(factory.name))
-	
-	def on_trash(self):
-		"""Actions before SBU is deleted"""
-		self.check_dependencies()
-	
-	def check_dependencies(self):
-		"""Check for dependencies before deletion"""
-		# Check for associated factory business units
-		factory_count = frappe.db.count("Factory Business Unit", {"sbu": self.name})
-		if factory_count > 0:
-			frappe.throw(_("Cannot delete SBU '{0}' as it has {1} associated Factory Business Unit(s)").format(
-				self.name, factory_count))
+	def validate_parent_sbu(self):
+		"""Validate parent SBU association"""
+		if self.parent_sbu:
+			# Prevent self-parenting
+			if self.parent_sbu == self.name:
+				frappe.throw(_("SBU cannot be its own parent"))
+			# Check if parent SBU exists and is active
+			parent = frappe.get_doc("Strategic Business Unit", self.parent_sbu)
+			if not parent.is_active:
+				frappe.throw(_("Parent SBU '{0}' is not active").format(self.parent_sbu))
+			# Check if parent SBU belongs to the same enterprise
+			if self.enterprise and parent.enterprise and parent.enterprise != self.enterprise:
+				frappe.throw(_("Parent SBU must belong to the same enterprise"))
+			# Check if parent SBU belongs to the same company
+			if self.company and parent.company and parent.company != self.company:
+				frappe.throw(_("Parent SBU must belong to the same company"))
 	
 	def before_insert(self):
 		"""Actions before SBU is inserted"""
@@ -153,3 +118,23 @@ class StrategicBusinessUnit(Document):
 		"""Set default values for new SBU"""
 		if not self.is_active:
 			self.is_active = 1
+
+	def create_cost_center_if_needed(self):
+		"""Create a Cost Center if is_cost_center is checked and not already set"""
+		if getattr(self, 'is_cost_center', 0) and self.company and not self.cost_center:
+			# Check if a cost center with this name and company already exists
+			existing = frappe.db.exists("Cost Center", {"cost_center_name": self.sbu_name, "company": self.company})
+			if existing:
+				self.cost_center = existing
+			else:
+				# Get the root cost center for the company
+				parent_cost_center = frappe.db.get_value("Cost Center", {"company": self.company, "parent_cost_center": None}, "name")
+				cc = frappe.get_doc({
+					"doctype": "Cost Center",
+					"cost_center_name": self.sbu_name,
+					"company": self.company,
+					"is_group": 0,
+					"parent_cost_center": parent_cost_center
+				})
+				cc.insert(ignore_permissions=True)
+				self.cost_center = cc.name
