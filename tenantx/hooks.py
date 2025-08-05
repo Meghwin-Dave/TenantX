@@ -43,7 +43,7 @@ app_license = "mit"
 # page_js = {"page" : "public/js/file.js"}
 
 # include js in doctype views
-# doctype_js = {"doctype" : "public/js/doctype.js"}
+doctype_js = {"User" : "public/js/user.js"}
 # doctype_list_js = {"doctype" : "public/js/doctype_list.js"}
 # doctype_tree_js = {"doctype" : "public/js/doctype_tree.js"}
 # doctype_calendar_js = {"doctype" : "public/js/doctype_calendar.js"}
@@ -117,10 +117,18 @@ app_license = "mit"
 # -----------
 # Permissions evaluated in scripted ways
 
-# permission_query_conditions = {
-# 	"Event": "frappe.desk.doctype.event.event.get_permission_query_conditions",
-# }
-#
+permission_query_conditions = {
+	"Factory Business Unit": "tenantx.tenantx.doctype.factory_business_unit.factory_business_unit.get_permission_query_conditions",
+	"Strategic Business Unit": "tenantx.tenantx.doctype.strategic_business_unit.strategic_business_unit.get_permission_query_conditions",
+	"Purchase Order": "tenantx.tenantx.permission_queries.get_permission_query_conditions_for_purchase_order",
+	"Sales Invoice": "tenantx.tenantx.permission_queries.get_permission_query_conditions_for_sales_invoice",
+	"Purchase Invoice": "tenantx.tenantx.permission_queries.get_permission_query_conditions_for_purchase_invoice",
+	"Sales Order": "tenantx.tenantx.permission_queries.get_permission_query_conditions_for_sales_order",
+	"Delivery Note": "tenantx.tenantx.permission_queries.get_permission_query_conditions_for_delivery_note",
+	"Purchase Receipt": "tenantx.tenantx.permission_queries.get_permission_query_conditions_for_purchase_receipt",
+	"Journal Entry": "tenantx.tenantx.permission_queries.get_permission_query_conditions_for_journal_entry",
+}
+
 # has_permission = {
 # 	"Event": "frappe.desk.doctype.event.event.has_permission",
 # }
@@ -137,13 +145,11 @@ app_license = "mit"
 # ---------------
 # Hook on document methods and events
 
-# doc_events = {
-# 	"*": {
-# 		"on_update": "method",
-# 		"on_cancel": "method",
-# 		"on_trash": "method"
-# 	}
-# }
+doc_events = {
+	"User": {
+		"on_update": "tenantx.tenantx.doc_events.user.on_update",
+	}
+}
 
 # Scheduled Tasks
 # ---------------
@@ -242,3 +248,16 @@ app_license = "mit"
 # 	"Logging DocType Name": 30  # days to retain logs
 # }
 
+# Fixtures
+# ----------
+# Fixtures are used to export/import data that should be shared across sites
+fixtures = [
+	{
+		"doctype": "Property Setter",
+		"filters": [["module", "=", "TenantX"]]
+	},
+	{
+		"doctype": "Custom Field",
+		"filters": [["module", "=", "TenantX"]]
+	}
+]

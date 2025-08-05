@@ -196,3 +196,23 @@ class FactoryBusinessUnit(Document):
 				})
 				cc.insert(ignore_permissions=True)
 				self.cost_center = cc.name
+
+
+def get_permission_query_conditions(user):
+	"""
+	Permission query conditions for Factory Business Unit
+	This function checks User Permission records for the logged-in user and returns SQL conditions
+	"""
+	if not user:
+		user = frappe.session.user
+	
+	# System Manager sees everything
+	if "System Manager" in frappe.get_roles(user):
+		return ""
+	
+	# This line fetches all Factory Business Units the user has been granted access to
+	# via the User Permissions doctype, which we automated in the previous step.
+	return """( `tabFactory Business Unit`.`name` IN (
+		SELECT `for_value` FROM `tabUser Permission`
+		WHERE `user`=%(user)s AND `allow`='Factory Business Unit'
+	))"""
