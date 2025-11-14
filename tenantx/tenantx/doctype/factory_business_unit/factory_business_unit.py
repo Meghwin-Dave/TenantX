@@ -140,11 +140,12 @@ class FactoryBusinessUnit(Document):
 		self.update_related_documents()
 	
 	def update_sbu_references(self):
+		pass
 		"""Update SBU references if factory changes"""
-		if self.has_value_changed("sbu"):
-			# Update SBU's factory reference
-			if self.sbu:
-				frappe.db.set_value("Strategic Business Unit", self.sbu, "factory", self.name)
+		# if self.has_value_changed("sbu"):
+		# 	# Update SBU's factory reference
+		# 	if self.sbu:
+		# 		frappe.db.set_value("Strategic Business Unit", self.sbu, "factory", self.name)
 	
 	def update_related_documents(self):
 		"""Update related documents when factory changes"""
