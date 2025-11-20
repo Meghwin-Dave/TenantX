@@ -117,17 +117,17 @@ doctype_js = {"User" : "public/js/user.js"}
 # -----------
 # Permissions evaluated in scripted ways
 
-permission_query_conditions = {
-	"Factory Business Unit": "tenantx.tenantx.doctype.factory_business_unit.factory_business_unit.get_permission_query_conditions",
-	"Strategic Business Unit": "tenantx.tenantx.doctype.strategic_business_unit.strategic_business_unit.get_permission_query_conditions",
-	"Purchase Order": "tenantx.tenantx.permission_queries.get_permission_query_conditions_for_purchase_order",
-	"Sales Invoice": "tenantx.tenantx.permission_queries.get_permission_query_conditions_for_sales_invoice",
-	"Purchase Invoice": "tenantx.tenantx.permission_queries.get_permission_query_conditions_for_purchase_invoice",
-	"Sales Order": "tenantx.tenantx.permission_queries.get_permission_query_conditions_for_sales_order",
-	"Delivery Note": "tenantx.tenantx.permission_queries.get_permission_query_conditions_for_delivery_note",
-	"Purchase Receipt": "tenantx.tenantx.permission_queries.get_permission_query_conditions_for_purchase_receipt",
-	"Journal Entry": "tenantx.tenantx.permission_queries.get_permission_query_conditions_for_journal_entry",
-}
+# permission_query_conditions = {
+# 	"Factory Business Unit": "tenantx.tenantx.doctype.factory_business_unit.factory_business_unit.get_permission_query_conditions",
+# 	"Strategic Business Unit": "tenantx.tenantx.doctype.strategic_business_unit.strategic_business_unit.get_permission_query_conditions",
+# 	"Purchase Order": "tenantx.tenantx.permission_queries.get_permission_query_conditions_for_purchase_order",
+# 	"Sales Invoice": "tenantx.tenantx.permission_queries.get_permission_query_conditions_for_sales_invoice",
+# 	"Purchase Invoice": "tenantx.tenantx.permission_queries.get_permission_query_conditions_for_purchase_invoice",
+# 	"Sales Order": "tenantx.tenantx.permission_queries.get_permission_query_conditions_for_sales_order",
+# 	"Delivery Note": "tenantx.tenantx.permission_queries.get_permission_query_conditions_for_delivery_note",
+# 	"Purchase Receipt": "tenantx.tenantx.permission_queries.get_permission_query_conditions_for_purchase_receipt",
+# 	"Journal Entry": "tenantx.tenantx.permission_queries.get_permission_query_conditions_for_journal_entry",
+# }
 
 # has_permission = {
 # 	"Event": "frappe.desk.doctype.event.event.has_permission",
